@@ -1,5 +1,5 @@
 import math
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 
 colors = ['#FFFFFF', "#EFEFEF", "#c0ffee"]
 
@@ -7,7 +7,7 @@ ang = 10
 
 def horizontal(w, h):
 
-    img = Image.new("RGB", (w, h))
+    img = Image.new("RGB", (w*10, h*10))
     dr = ImageDraw.Draw(img)
 
     s = ((w / len(colors)) * -1)
@@ -15,19 +15,19 @@ def horizontal(w, h):
     dr.polygon(
         (
             (
-                math.floor(s) + ang,
+                (math.floor(s) + ang)*10,
                 0
             ), 
             (
-                math.floor(s) - ang,
-                h-1
+                (math.floor(s) - ang)*10,
+                (h-1)*10
             ),
             (
-                math.floor(wi) - ang, 
-                h-1
+                (math.floor(wi) - ang)*10, 
+                (h-1)*10
             ),
             (
-                math.floor(wi) + ang,
+                (math.floor(wi) + ang)*10,
                 0
             )
         ), fill = colors[-1])
@@ -38,19 +38,19 @@ def horizontal(w, h):
         dr.polygon(
             (
                 (
-                    math.floor(s) + ang,
+                    (math.floor(s) + ang)*10,
                     0
                 ), 
                 (
-                    math.floor(s) - ang,
-                    h-1
+                    (math.floor(s) - ang)*10,
+                    (h-1)*10
                 ),
                 (
-                    math.floor(wi) - ang, 
-                    h-1
+                    (math.floor(wi) - ang)*10, 
+                    (h-1)*10
                 ),
                 (
-                    math.floor(wi) + ang,
+                    (math.floor(wi) + ang)*10,
                     0
                 )
             ), fill = b)
@@ -60,29 +60,31 @@ def horizontal(w, h):
     dr.polygon(
         (
             (
-                math.floor(s) + ang,
+                (math.floor(s) + ang)*10,
                 0
             ), 
             (
-                math.floor(s) - ang,
-                h-1
+                (math.floor(s) - ang)*10,
+                (h-1)*10
             ),
             (
-                math.floor(wi) - ang, 
-                h-1
+                (math.floor(wi) - ang)*10, 
+                (h-1)*10
             ),
             (
-                math.floor(wi) + ang,
+                (math.floor(wi) + ang)*10,
                 0
             )
         ), fill = colors[0])
 
-    img.save(sys.argv[5])
+    nimg = img.resize((w, h), resample=Image.ANTIALIAS)
+
+    nimg.save(sys.argv[5])
 
 def vertical(w, h):
     h, w = w, h
 
-    img = Image.new("RGB", (w, h))
+    img = Image.new("RGB", (w*10, h*10))
     dr = ImageDraw.Draw(img)
 
     s = ((h / len(colors)) * -1)
@@ -91,19 +93,19 @@ def vertical(w, h):
         (
             (
                 0,
-                math.floor(s) + ang
+                (math.floor(s) + ang)*10
             ), 
             (
-                w-1,
-                math.floor(s) - ang
+                (w-1)*10,
+                (math.floor(s) - ang)*10
             ),
             (
-                w-1,
-                math.floor(hi) - ang
+                (w-1)*10,
+                (math.floor(hi) - ang)*10
             ),
             (
                 0,
-                math.floor(hi) + ang
+                (math.floor(hi) + ang)*10
             )
         ), fill = colors[-1])
 
@@ -114,19 +116,19 @@ def vertical(w, h):
             (
                 (
                     0, 
-                    math.floor(s) + ang
+                    (math.floor(s) + ang)*10
                 ),
                 (
-                    w-1,
-                    math.floor(s) - ang
+                    (w-1)*10,
+                    (math.floor(s) - ang)*10
                 ),
                 (
-                    w-1, 
-                    math.floor(hi) - ang
+                    (w-1)*10, 
+                    (math.floor(hi) - ang)*10
                 ),
                 (
                     0,
-                    math.floor(hi) + ang
+                    (math.floor(hi) + ang)*10
                 )
             ), fill = b)
 
@@ -136,23 +138,25 @@ def vertical(w, h):
         (
             (
                 0,
-                math.floor(s) + ang
+                (math.floor(s) + ang)*10
             ), 
             (
-                w-1,
-                math.floor(s) - ang
+                (w-1)*10,
+                (math.floor(s) - ang)*10
             ),
             (
-                w-1,
-                math.floor(hi) - ang
+                (w-1)*10,
+                (math.floor(hi) - ang)*10
             ),
             (
                 0,
-                math.floor(hi) + ang
+                (math.floor(hi) + ang)*10
             )
         ), fill = colors[0])
 
-    img.save(sys.argv[5])
+    nimg = img.resize((w, h), resample=Image.ANTIALIAS)
+
+    nimg.save(sys.argv[5])
 
 import sys
 
