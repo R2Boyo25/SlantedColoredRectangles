@@ -20,11 +20,11 @@ def horizontal(w, h):
             ), 
             (
                 (math.floor(s) - ang)*10,
-                (h-1)*10
+                (h)*10
             ),
             (
                 (math.floor(wi) - ang)*10, 
-                (h-1)*10
+                (h)*10
             ),
             (
                 (math.floor(wi) + ang)*10,
@@ -43,11 +43,11 @@ def horizontal(w, h):
                 ), 
                 (
                     (math.floor(s) - ang)*10,
-                    (h-1)*10
+                    (h)*10
                 ),
                 (
                     (math.floor(wi) - ang)*10, 
-                    (h-1)*10
+                    (h)*10
                 ),
                 (
                     (math.floor(wi) + ang)*10,
@@ -65,11 +65,11 @@ def horizontal(w, h):
             ), 
             (
                 (math.floor(s) - ang)*10,
-                (h-1)*10
+                (h)*10
             ),
             (
                 (math.floor(wi) - ang)*10, 
-                (h-1)*10
+                (h)*10
             ),
             (
                 (math.floor(wi) + ang)*10,
@@ -96,11 +96,11 @@ def vertical(w, h):
                 (math.floor(s) + ang)*10
             ), 
             (
-                (w-1)*10,
+                (w)*10,
                 (math.floor(s) - ang)*10
             ),
             (
-                (w-1)*10,
+                (w)*10,
                 (math.floor(hi) - ang)*10
             ),
             (
@@ -119,11 +119,11 @@ def vertical(w, h):
                     (math.floor(s) + ang)*10
                 ),
                 (
-                    (w-1)*10,
+                    (w)*10,
                     (math.floor(s) - ang)*10
                 ),
                 (
-                    (w-1)*10, 
+                    (w)*10, 
                     (math.floor(hi) - ang)*10
                 ),
                 (
@@ -141,11 +141,11 @@ def vertical(w, h):
                 (math.floor(s) + ang)*10
             ), 
             (
-                (w-1)*10,
+                (w)*10,
                 (math.floor(s) - ang)*10
             ),
             (
-                (w-1)*10,
+                (w)*10,
                 (math.floor(hi) - ang)*10
             ),
             (
