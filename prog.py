@@ -102,7 +102,7 @@ def total(objs):
 def percNum(perc, num):
     return perc * num
 
-def hor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 20):
+def hor(wh : "(width, height)", objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 20, totl = 0):
     img = Image.new("RGBA", (wh[0] * 10, wh[1] * 10))
     dr = ImageDraw.Draw(img)
 
@@ -111,7 +111,7 @@ def hor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 2
     widt = 0
     polx(dr, strt, widt, wh, angl, strtcolr)
 
-    totl = total(objs)
+    totl = total(objs) if totl == 0 else totl
     totlperc = 0
 
     for amnt, colr in objs:
@@ -134,26 +134,16 @@ def hor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 2
 
 
 if __name__ == '__main__':
-    colors = [(20, '#FF0000'), (30, "#00FF00"), (50, "#c0ffee")]
+    import subprocess, sys
+    df = subprocess.Popen(["df", "/"], stdout=subprocess.PIPE)
+    output = df.communicate()[0]
+    #device, size, used, available, percent, mountpoint = \
+    e = output.decode().split("\n")[1].split()
 
-    hor((300, 100), colors, strtcolr = colors[-1][1]).show()
+    print(e[2], e[3])
 
-    quit()
+    #colors = [(20, '#FF0000'), (30, "#00FF00"), (50, "#c0ffee")]
 
-    ang = 10
+    colors = [(int(e[2]), '#FE8411'), (int(e[3]), "#FFFFFF")]
 
-    import sys
-
-    def setColors(colorss):
-        global colors
-        colors = []
-        for color in colorss:
-            colors.append('#' + color.lstrip('#'))
-
-    setColors(sys.argv[6:])
-    if sys.argv[1] == 'h':
-        ang = int(sys.argv[4])
-        horizontal(int(sys.argv[2]), int(sys.argv[3]))
-    elif sys.argv[1] == 'v':
-        ang = int(sys.argv[4])
-        vertical(int(sys.argv[2]), int(sys.argv[3]))
+    hor((300, 100), colors, strtcolr = "#010000", endcolr = "#010000").save(sys.argv[1])
