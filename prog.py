@@ -90,8 +90,59 @@ def vertical(w, h):
 
     nimg.save(sys.argv[5])
 
+def perc(cur, all):
+    return cur/all
+
+def total(objs):
+    totl = 0
+    for amnt, colr in objs:
+        totl += amnt
+    return totl
+
+def percNum(perc, num):
+    return perc * num
+
+def hor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 20):
+    img = Image.new("RGBA", (wh[0] * 10, wh[1] * 10))
+    dr = ImageDraw.Draw(img)
+
+    # start notch
+    strt = -0.10 * wh[0]
+    widt = 0
+    polx(dr, strt, widt, wh, angl, strtcolr)
+
+    totl = total(objs)
+    totlperc = 0
+
+    print(totl)
+
+    for amnt, colr in objs:
+        aprc = percNum(perc(amnt, totl), wh[0])
+
+        strt = totlperc
+        totlperc += aprc 
+        widt = totlperc
+
+        print(totlperc)
+        
+        polx(dr, math.floor(strt), math.ceil(widt), wh, angl, colr)
+
+    # end notch
+    strt = wh[0]
+    widt = wh[0] + ( 0.10 * wh[0] )
+    polx(dr, strt, widt, wh, angl, endcolr)
+
+    nimg = img.resize( (wh[0], wh[1] ), resample = Image.ANTIALIAS )
+
+    return nimg
+
+
 if __name__ == '__main__':
-    colors = ['#FFFFFF', "#EFEFEF", "#c0ffee"]
+    colors = [(20, '#FF0000'), (30, "#00FF00"), (50, "#c0ffee")]
+
+    hor((300, 100), colors).show()
+
+    quit()
 
     ang = 10
 
