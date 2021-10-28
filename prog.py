@@ -114,16 +114,12 @@ def hor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 2
     totl = total(objs)
     totlperc = 0
 
-    print(totl)
-
     for amnt, colr in objs:
         aprc = percNum(perc(amnt, totl), wh[0])
 
         strt = totlperc
         totlperc += aprc 
         widt = totlperc
-
-        print(totlperc)
         
         polx(dr, math.floor(strt), math.ceil(widt), wh, angl, colr)
 
@@ -140,7 +136,7 @@ def hor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 2
 if __name__ == '__main__':
     colors = [(20, '#FF0000'), (30, "#00FF00"), (50, "#c0ffee")]
 
-    hor((300, 100), colors).show()
+    hor((300, 100), colors, strtcolr = colors[-1][1]).show()
 
     quit()
 
