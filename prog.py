@@ -45,51 +45,6 @@ def poly(dr, s, i, wh, ang, color):
                 )
             ), fill = color)
 
-def horizontal(w, h):
-
-    img = Image.new("RGB", (w*10, h*10))
-    dr = ImageDraw.Draw(img)
-
-    s = ((w / len(colors)) * -1)
-    wi = w / len(colors) + s
-    polx(dr, s, wi, (w, h), ang, colors[-1])
-
-    for a, b in enumerate(colors):
-        s = ((w / len(colors)) * a)
-        wi = w / len(colors) + s
-        polx(dr, s, wi, (w, h), ang, b)
-
-    s = ((w / len(colors)) * len(colors)-1)
-    wi = w / len(colors) + s
-    polx(dr, s, wi, (w, h), ang, colors[0])
-
-    nimg = img.resize((w, h), resample=Image.ANTIALIAS)
-
-    nimg.save(sys.argv[5])
-
-def vertical(w, h):
-    h, w = w, h
-
-    img = Image.new("RGB", (w*10, h*10))
-    dr = ImageDraw.Draw(img)
-
-    s = ((h / len(colors)) * -1)
-    hi = h / len(colors) + s
-    poly(dr, s, hi, (w, h), ang, colors[-1])
-
-    for a, b in enumerate(colors):
-        s = ((h / len(colors)) * a)
-        hi = h / len(colors) + s
-        poly(dr, s, hi, (w, h), ang, b)
-
-    s = ((h / len(colors)) * len(colors)-1)
-    hi = h / len(colors) + s
-    poly(dr, s, hi, (w, h), ang, colors[0])
-
-    nimg = img.resize((w, h), resample=Image.ANTIALIAS)
-
-    nimg.save(sys.argv[5])
-
 def perc(cur, all):
     return cur/all
 
@@ -132,6 +87,36 @@ def hor(wh : "(width, height)", objs, *args, strtcolr = "#00000000", endcolr = "
 
     return nimg
 
+def ver(wh : "(width, height)", objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 10, totl = 0):
+    img = Image.new("RGBA", (wh[0] * 10, wh[1] * 10))
+    dr = ImageDraw.Draw(img)
+
+    # start notch
+    strt = -0.10 * wh[1]
+    high = 0
+    poly(dr, strt, high, wh, angl, strtcolr)
+
+    totl = total(objs) if totl == 0 else totl
+    totlperc = 0
+
+    for amnt, colr in objs:
+        aprc = percNum(perc(amnt, totl), wh[1])
+
+        strt = totlperc
+        totlperc += aprc 
+        high = totlperc
+        
+        poly(dr, math.floor(strt), math.ceil(high), wh, angl, colr)
+
+    # end notch
+    strt = wh[1]
+    high = wh[1] + ( 0.10 * wh[1] )
+    poly(dr, strt, high, wh, angl, endcolr)
+
+    nimg = img.resize( (wh[0], wh[1] ), resample = Image.ANTIALIAS )
+
+    return nimg
+
 
 if __name__ == '__main__':
     import subprocess, sys
@@ -146,4 +131,7 @@ if __name__ == '__main__':
 
     colors = [(int(e[2]), '#FE8411'), (int(e[3]), "#FFFFFF")]
 
-    hor((300, 100), colors, strtcolr = "#010000", endcolr = "#010000").save(sys.argv[1])
+    #hor((300, 100), colors, strtcolr = "#010000", endcolr = "#010000").save(sys.argv[1])
+    #ver((100, 300), colors, strtcolr = "#010000", endcolr = "#010000").save(sys.argv[1])
+    hor((300, 100), colors, angl = -20).save(sys.argv[1])
+    #ver((100, 300), colors).save(sys.argv[1])
