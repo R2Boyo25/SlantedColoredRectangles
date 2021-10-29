@@ -117,9 +117,51 @@ def ver(wh : "(width, height)", objs, *args, strtcolr = "#00000000", endcolr = "
 
     return nimg
 
+def multAllBy(all, num):
+    new = []
+
+    for obj in all:
+        new.append((obj[0] * num, obj[1]))
+    
+    return new
+
+def genFrmNums():
+    #ii = 2
+
+    #outnums = [1 / 100]
+
+    #while ii < 100:
+    #    ii = ii * ii
+    #    if ii > 100:
+    #        ii = 100
+    #    outnums.append(ii/100)
+    
+    outnums = [-(25-(i/5)**2)**0.5+5 for i in range(15)]
+
+    outnums.append(1)
+
+    return outnums
+
+def animHor(wh, objs, *args, strtcolr = "#00000000", endcolr = "#00000000", angl = 20, totl = 0):
+    animfrms = []
+    
+    if totl == 0:
+        ftotl = total(objs)
+    else:
+        ftotl = totl
+    
+    frmnums = genFrmNums() # [0.1, 0.3, 0.6, 0.9, 1]
+
+    for i in frmnums:
+        print(i)
+        curfrm = multAllBy(objs, i)
+        animfrms.append( hor(wh, curfrm, *args, strtcolr = strtcolr, endcolr = endcolr, angl = angl, totl = ftotl) )
+    
+    return animfrms
+
 
 if __name__ == '__main__':
-    import subprocess, sys
+    import subprocess, sys, gif
     df = subprocess.Popen(["df", "/"], stdout=subprocess.PIPE)
     output = df.communicate()[0]
     #device, size, used, available, percent, mountpoint = \
@@ -133,5 +175,11 @@ if __name__ == '__main__':
 
     #hor((300, 100), colors, strtcolr = "#010000", endcolr = "#010000").save(sys.argv[1])
     #ver((100, 300), colors, strtcolr = "#010000", endcolr = "#010000").save(sys.argv[1])
-    hor((300, 100), colors, angl = -20).save(sys.argv[1])
+    #hor((300, 100), colors, angl = -20).save(sys.argv[1])
     #ver((100, 300), colors).save(sys.argv[1])
+
+    anm = animHor((600, 200), colors, angl = -20)
+    gif.save_transparent_gif(anm, 50, 'e.gif')
+    #save('e.gif', save_all = True, append_images = anm[1:], optimize = True)
+    #for num, frm in enumerate(anm):
+    #    frm.save(f'animout/{num}.png')
